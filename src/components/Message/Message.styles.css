@@ -1,0 +1,9 @@
+.message {
+    color: black;
+}
+.message__author {
+    font-weight: 700;
+}
+.message__text {
+    font-style: italic;
+}
