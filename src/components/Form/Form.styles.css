@@ -1,0 +1,12 @@
+.form {
+    padding: 20px 0;
+}
+.form__input {
+    padding: 5px;
+    width: 300px;
+}
+.form__submit {
+    padding: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
