@@ -1,5 +1,10 @@
 .message {
-    color: tomato;
-    font-weight: 400;
-    padding-left: 50px;
+    color: black;
+    padding-top: 2px;
+}
+.message__author {
+    font-weight: 700;
+}
+.message__text {
+    font-style: italic;
 }
