@@ -23,8 +23,6 @@ export const Form = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className="form">
-      {/* <input value={value} onChange={handleChange} type="text" className="form__input"/> */}
-      {/* <input type="submit" className="form__submit" /> */}
       <TextField
         fullWidth
         margin="dense"

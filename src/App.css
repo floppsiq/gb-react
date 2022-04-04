@@ -1,5 +1,9 @@
 .App {
-  /*text-align: center;*/
+  padding: 20px;
+  display: flex;
+}
+
+.wrapper {
   padding: 20px;
   display: flex;
 }

@@ -1,0 +1,7 @@
+.chat__link {
+    color: black;
+    text-decoration: none;
+}
+.chat__link:hover {
+    border-bottom: 1px solid black;
+}
