@@ -1,18 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import { ChatList } from "../../components/ChatList/ChatList";
 import { Form } from "../../components/Form/Form";
 import { MessageList } from "../../components/MessageList/MessageList";
 import { AUTHORS } from "../../utils/constants";
 
-// const chats = [
-//   { id: "chat1", letter: "А", name: "Андрей" },
-//   { id: "chat2", letter: "О", name: "Олег" },
-//   { id: "chat3", letter: "И", name: "Игорь" },
-//   { id: "chat4", letter: "В", name: "Виктор" },
-//   { id: "chat5", letter: "С", name: "Семен" },
-//   { id: "chat6", letter: "С", name: "Сергей" },
-// ];
 
 const initMessages = {
   chat1: [],

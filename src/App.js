@@ -1,17 +1,16 @@
 import "./App.css";
-// import { useEffect, useState } from "react";
-// import { Form } from "./components/Form/Form";
-// import { AUTHORS } from "./utils/constants";
-// import { MessageList } from "./components/MessageList/MessageList";
 import { ChatList } from "./components/ChatList/ChatList";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import { Chat } from "./screens/Chat/Chat";
-import { Profile } from "./components/Profile/Profile";
+import { Profile } from "./screens/Profile/Profile";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 const Home = () => <h1>Home page</h1>;
 
 function App() {
   return (
+    <Provider store={store}>
     <BrowserRouter>
       <ul>
         <li>
@@ -50,6 +49,7 @@ function App() {
         </Routes>
       </section>
     </BrowserRouter>
+    </Provider>
   );
 }
 

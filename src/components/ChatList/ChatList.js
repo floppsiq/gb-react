@@ -18,15 +18,6 @@ const chatList = [
   { id: "chat6", letter: "С", name: "Сергей" },
 ];
 
-// const chatList = [
-//   { id: 1, letter: "А", name: "Андрей" },
-//   { id: 2, letter: "О", name: "Олег" },
-//   { id: 3, letter: "И", name: "Игорь" },
-//   { id: 4, letter: "В", name: "Виктор" },
-//   { id: 5, letter: "С", name: "Семен" },
-//   { id: 6, letter: "С", name: "Сергей" },
-// ];
-
 export const ChatList = () => {
   return (
     <>
