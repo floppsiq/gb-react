@@ -3,14 +3,59 @@ import { ChatList } from "./components/ChatList/ChatList";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import { Chat } from "./screens/Chat/Chat";
 import { Profile } from "./screens/Profile/Profile";
-import { Provider } from "react-redux";
-import { store } from "./store";
+import { Home } from "./screens/Home/Home";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { addChat, deleteChat } from "./store/chats/actions";
+import { selectChats } from "./store/chats/selectors";
+import { selectMessages } from "./store/messages/selectors";
+import { addMessage, clearMessages } from "./store/messages/actions";
 
-const Home = () => <h1>Home page</h1>;
+// const initialChats = [
+//   { id: "chat1", letter: "А", name: "Андрей" },
+//   { id: "chat2", letter: "О", name: "Олег" },
+//   { id: "chat3", letter: "И", name: "Игорь" },
+//   { id: "chat4", letter: "В", name: "Виктор" },
+//   { id: "chat5", letter: "С", name: "Семен" },
+//   { id: "chat6", letter: "С", name: "Сергей" },
+// ];
+
+// const initMessages = initialChats.reduce((acc, chat) => {
+//   acc[chat.id] = [];
+//   return acc;
+// }, {});
 
 function App() {
+  
+  const chats = useSelector(selectChats, shallowEqual);
+  const messages = useSelector(selectMessages)
+  const dispatch = useDispatch();
+
+  // const [messages, setMessages] = useState(initMessages);
+  
+
+  const addNewMessage = (newMsg, id) => {
+    // setMessages({ ...messages, [id]: [...messages[id], newMsg] });
+    dispatch(addMessage(newMsg, id));
+  };
+
+  const addNewChat = (newChat) => {
+    // setChats((prevChats) => [...prevChats, newChat]);
+    dispatch(addChat(newChat));
+    // setMessages((prevMessages) => ({ ...prevMessages, [newChat.id]: [] }));
+  };
+
+  const removeChat = (id) => {
+    // setChats((prevChats) => prevChats.filter((chat) => chat.id !== id));
+    dispatch(deleteChat(id));
+    dispatch(clearMessages(id))
+    // setMessages((prevMessages) => {
+    //   const newMessages = { ...prevMessages };
+    //   delete newMessages[id];
+    //   return newMessages;
+    // });
+  };
+
   return (
-    <Provider store={store}>
     <BrowserRouter>
       <ul>
         <li>
@@ -41,64 +86,27 @@ function App() {
       <section className="wrapper">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile/>} />
-          <Route path="/chats" element={<ChatList />}>
-            <Route path=":id" element={<Chat />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/chats"
+            element={
+              <ChatList
+                deleteChat={removeChat}
+                addChat={addNewChat}
+                chats={chats}
+              />
+            }
+          >
+            <Route
+              path=":id"
+              element={<Chat addMessage={addNewMessage} messages={messages} />}
+            />
           </Route>
           <Route path="*" element={<h4>404</h4>} />
         </Routes>
       </section>
     </BrowserRouter>
-    </Provider>
   );
 }
-
-// const messageList = [];
-
-// function App() {
-//   const [messages, setMessages] = useState(messageList);
-
-//   const addMessage = (newMsg) => {
-//     setMessages([...messages, newMsg]);
-//   };
-
-//   const sendMessage = (text) => {
-//     addMessage({
-//       author: AUTHORS.human,
-//       text,
-//       id: `msg-${Date.now()}`,
-//     });
-//   };
-
-//   useEffect(() => {
-//     let timeOut;
-
-//     if (
-//       messages.length > 0 &&
-//       messages[messages.length - 1].author === AUTHORS.human
-//     ) {
-//       timeOut = setTimeout(() => {
-//         addMessage({
-//           author: AUTHORS.robot,
-//           text: "Сообщение отправлено",
-//           id: `msg-${Date.now()}`,
-//         });
-//       }, 1500);
-//     }
-//     return () => {
-//       clearTimeout(timeOut);
-//     };
-//   }, [messages]);
-
-//   return (
-//     <div className="App">
-//       <ChatList />
-//       <div className="message-list">
-//         <Form onSubmit={sendMessage} />
-//         <MessageList messages={messages} />
-//       </div>
-//     </div>
-//   );
-// }
 
 export default App;

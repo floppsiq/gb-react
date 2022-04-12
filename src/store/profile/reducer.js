@@ -1,4 +1,4 @@
-import { TOGGLE_CHECKBOX } from "./actions";
+import { SET_NAME, TOGGLE_CHECKBOX } from "./actions";
 
 const initialState = {
     showName: false,
@@ -12,6 +12,12 @@ const initialState = {
           ...state,
           showName: !state.showName,
         };
+      }
+      case SET_NAME: {
+        return {
+          ...state,
+          name: action.payload,
+        }
       }
       default:
         return state;

@@ -4,44 +4,35 @@ import { Form } from "../../components/Form/Form";
 import { MessageList } from "../../components/MessageList/MessageList";
 import { AUTHORS } from "../../utils/constants";
 
-
-const initMessages = {
-  chat1: [],
-  chat2: [],
-  chat3: [],
-  chat4: [],
-  chat5: [],
-  chat6: [],
-};
-
-export function Chat() {
+export function Chat({ messages, addMessage }) {
   const { id } = useParams();
-  const [messages, setMessages] = useState(initMessages);
-
+  
   const timeout = useRef();
   const wrapperRef = useRef();
 
-  const addMessage = (newMsg) => {
-    setMessages({ ...messages, [id]: [...messages[id], newMsg] });
-  };
-
   const sendMessage = (text) => {
-    addMessage({
-      author: AUTHORS.human,
-      text,
-      id: `msg-${Date.now()}`,
-    });
+    addMessage(
+      {
+        author: AUTHORS.human,
+        text,
+        id: `msg-${Date.now()}`,
+      },
+      id
+    );
   };
 
   useEffect(() => {
     const lastMessage = messages[id]?.[messages[id]?.length - 1];
     if (lastMessage?.author === AUTHORS.human) {
       timeout.current = setTimeout(() => {
-        addMessage({
-          author: AUTHORS.robot,
-          text: "Сообщение отправлено",
-          id: `msg-${Date.now()}`,
-        });
+        addMessage(
+          {
+            author: AUTHORS.robot,
+            text: "Сообщение отправлено",
+            id: `msg-${Date.now()}`,
+          },
+          id
+        );
       }, 1000);
     }
 

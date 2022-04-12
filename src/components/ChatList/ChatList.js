@@ -1,3 +1,4 @@
+import { DeleteSharp } from "@mui/icons-material";
 import {
   Avatar,
   List,
@@ -5,36 +6,45 @@ import {
   ListItemText,
   ListItemAvatar,
   Divider,
+  IconButton,
 } from "@mui/material";
 import { Link, Outlet } from "react-router-dom";
+import { Form } from "../Form/Form";
 import "./ChatList.styles.css";
 
-const chatList = [
-  { id: "chat1", letter: "А", name: "Андрей" },
-  { id: "chat2", letter: "О", name: "Олег" },
-  { id: "chat3", letter: "И", name: "Игорь" },
-  { id: "chat4", letter: "В", name: "Виктор" },
-  { id: "chat5", letter: "С", name: "Семен" },
-  { id: "chat6", letter: "С", name: "Сергей" },
-];
+export const ChatList = ({ chats, addChat, deleteChat }) => {
+  const handleSubmit = (newChatName) => {
+    const newChat = {
+      name: newChatName,
+      id: `chat-${Date.now()}`,
+      letter: `${newChatName.slice(0, 1).toUpperCase()}`,
+    };
+    addChat(newChat);
+  };
 
-export const ChatList = () => {
   return (
     <>
       <List sx={{ width: "100%", maxWidth: 300, mr: 2 }}>
-        {chatList.map(({ id, name, letter }) => (
+        {chats.map((chat) => (
           <>
-            <Link to={`/chats/${id}`} className="chat__link">
-              <ListItem key={id}>
+            <ListItem key={chat.id} sx={{ justifyContent: "space-between" }}>
+              <Link to={`/chats/${chat.id}`} className="chat__link">
                 <ListItemAvatar>
-                  <Avatar>{letter}</Avatar>
+                  <Avatar sx={{ bgcolor: "#1976d2" }}>{chat.letter}</Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={name} />
-              </ListItem>
-            </Link>
+                <ListItemText primary={chat.name} />
+              </Link>
+              <IconButton
+                aria-label="delete"
+                onClick={() => deleteChat(chat.id)}
+              >
+                <DeleteSharp color="primary" />
+              </IconButton>
+            </ListItem>
             <Divider variant="inset" />
           </>
         ))}
+        <Form onSubmit={handleSubmit} />
       </List>
       <Outlet />
     </>
