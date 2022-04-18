@@ -1,42 +1,10 @@
 import { DeleteSharp } from "@mui/icons-material";
-import {
-  Avatar,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Divider,
-  IconButton,
-} from "@mui/material";
+import { Avatar, Divider, IconButton, List, ListItem, ListItemAvatar, ListItemText } from "@mui/material";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
-import { addChat, deleteChat } from "../../store/chats/actions";
-import { selectChats } from "../../store/chats/selectors";
-import { clearMessages, initMessagesForChat } from "../../store/messages/actions";
 import { Form } from "../Form/Form";
-import "./ChatList.styles.css";
 
-export const ChatList = () => {
-  const chats = useSelector(selectChats);
-  const dispatch = useDispatch();
-
-  const handleSubmit = (newChatName) => {
-    const newChat = {
-      name: newChatName,
-      id: `chat-${Date.now()}`,
-      letter: `${newChatName.slice(0, 1).toUpperCase()}`,
-    };
-    dispatch(addChat(newChat));
-    dispatch(initMessagesForChat(newChat.id));
-  };
-
-  const handelRemoveChat = (id) => {
-    dispatch(deleteChat(id));
-    dispatch(clearMessages(id));
-  }
-
-  return (
+export const ChatListPres = ({ chats, handelRemoveChat, handleSubmit}) => (    
     <>
       <List sx={{ width: "100%", maxWidth: 300, mr: 2 }}>
         {chats.map((chat) => (
@@ -63,4 +31,3 @@ export const ChatList = () => {
       <Outlet />
     </>
   );
-};

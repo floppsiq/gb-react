@@ -1,5 +1,9 @@
 import { ADD_CHAT } from "../chats/actions";
-import { ADD_MESSAGE, CLEAR_MESSAGES } from "./actions";
+import {
+  ADD_MESSAGE,
+  CLEAR_MESSAGES_FOR_CHAT,
+  INIT_MESSAGES_FOR_CHAT,
+} from "./actions";
 
 const initialState = {};
 
@@ -11,18 +15,24 @@ export const messagesReducer = (state = initialState, { type, payload }) => {
         [payload.chatId]: [...state[payload.chatId], payload.newMsg],
       };
     }
-    case ADD_CHAT: {
+    // case ADD_CHAT: {
+    //   return {
+    //     ...state,
+    //     [payload.id]: [],
+    //   };
+    // }
+    case INIT_MESSAGES_FOR_CHAT: {
       return {
         ...state,
-        [payload.id]: [],
+        [payload]: [],
       };
     }
-    case CLEAR_MESSAGES: {
+    case CLEAR_MESSAGES_FOR_CHAT: {
       const copy = { ...state };
       delete copy[payload];
+
       return copy;
     }
-
     default:
       return state;
   }

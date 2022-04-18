@@ -2,7 +2,7 @@ import { Button, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import "./Form.styles.css";
 
-export const Form = ({ onSubmit }) => {
+export const Form = ({ onSubmit, textBtn }) => {
   const [value, setValue] = useState("");
 
   const inputRef = useRef();
@@ -33,7 +33,7 @@ export const Form = ({ onSubmit }) => {
         inputRef={inputRef}
       />
       <Button type="submit" size="medium" variant="contained">
-        Отправить
+        {textBtn}
       </Button>
     </form>
   );
