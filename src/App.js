@@ -5,6 +5,7 @@ import { Chat } from "./screens/Chat/Chat";
 import { Profile } from "./screens/Profile/Profile";
 import { Home } from "./screens/Home/Home";
 import { ChatListCont } from "./components/ChatList/ChatListCont";
+import { Articles } from "./screens/Articles/Articles";
 
 function App() {
  
@@ -35,11 +36,20 @@ function App() {
             Profile
           </NavLink>
         </li>
+        <li>
+          <NavLink
+            style={({ isActive }) => ({ color: isActive ? "green" : "blue" })}
+            to="/articles"
+          >
+            Articles
+          </NavLink>
+        </li>
       </ul>
       <section className="wrapper">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/articles" element={<Articles />} />
           <Route path="/chats" element={<ChatList />}>
             <Route path=":id" element={<Chat />} />
           </Route>

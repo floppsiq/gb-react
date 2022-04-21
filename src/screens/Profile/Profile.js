@@ -33,7 +33,7 @@ export const Profile = () => {
           label="Показать имя"
         />
       </FormGroup>
-      <Form onSubmit={handleSubmit} />
+      <Form onSubmit={handleSubmit} textBtn={"Сменить имя"}/>
     </div>
   );
 };

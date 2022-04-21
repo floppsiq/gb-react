@@ -12,8 +12,7 @@ export function Chat() {
   const getMessages = useMemo(() => selectMessagesByChatId(id), [id])
   const messages = useSelector(getMessages);
   const dispatch = useDispatch();
-
-  const timeout = useRef();
+  
   const wrapperRef = useRef();
 
   const sendMessage = (text) => {
@@ -28,32 +27,6 @@ export function Chat() {
       )
     );
   };
-
-  // useEffect(() => {
-  //   const lastMessage = messages?.[messages?.length - 1];
-  //   if (lastMessage?.author === AUTHORS.human) {
-  //     timeout.current = setTimeout(() => {
-  //       dispatch(
-  //         addMessage(
-  //           {
-  //             author: AUTHORS.robot,
-  //             text: "Сообщение отправлено",
-  //             id: `msg-${Date.now()}`,
-  //           },
-  //           id
-  //         )
-  //       );
-  //     }, 1000);
-  //   }
-
-  //   return () => {
-  //     clearTimeout(timeout.current);
-  //   };
-  // }, [messages]);
-
-  // if (!messages) {
-  //   return <Navigate to="/chats" replace />;
-  // }
 
   return (
     <div className="App" ref={wrapperRef}>

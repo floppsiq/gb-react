@@ -1,7 +1,7 @@
 import { SET_NAME, TOGGLE_CHECKBOX } from "./actions";
 
 const initialState = {
-    showName: false,
+    showName: true,
     name: "Данил",
   };
   
