@@ -8,9 +8,11 @@ import {
   Divider,
   IconButton,
 } from "@mui/material";
-import React from "react";
+import { onValue, remove, set } from "firebase/database";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
+import { chatsRef, getChatRefById, getMsgsRefById } from "../../services/firebase";
 import { addChat, deleteChat } from "../../store/chats/actions";
 import { selectChats } from "../../store/chats/selectors";
 import { clearMessages, initMessagesForChat } from "../../store/messages/actions";
@@ -18,7 +20,10 @@ import { Form } from "../Form/Form";
 import "./ChatList.styles.css";
 
 export const ChatList = () => {
-  const chats = useSelector(selectChats);
+  const [chats, setChats] = useState([]);
+
+  //const chats = useSelector(selectChats);
+
   const dispatch = useDispatch();
 
   const handleSubmit = (newChatName) => {
@@ -27,14 +32,26 @@ export const ChatList = () => {
       id: `chat-${Date.now()}`,
       letter: `${newChatName.slice(0, 1).toUpperCase()}`,
     };
-    dispatch(addChat(newChat));
-    dispatch(initMessagesForChat(newChat.id));
+    set(getChatRefById(newChat.id), newChat);
+    set(getMsgsRefById(newChat.id), { exists: true });
+    // dispatch(addChat(newChat));
+    // dispatch(initMessagesForChat(newChat.id));
   };
 
   const handelRemoveChat = (id) => {
-    dispatch(deleteChat(id));
-    dispatch(clearMessages(id));
+    remove(getChatRefById(id));
+    set(getMsgsRefById(id), null);
+    // dispatch(deleteChat(id));
+    // dispatch(clearMessages(id));
   }
+
+  useEffect(() => {
+    const unsubscribe = onValue(chatsRef, (snapshot) => {
+      console.log(snapshot.val());
+      setChats(Object.values(snapshot.val() || {}));
+    });
+    return unsubscribe;
+  }, []);
 
   return (
     <>
